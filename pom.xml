@@ -201,15 +201,11 @@
           <sourceDirectory>${project.basedir}/target/asyncapi-schema</sourceDirectory>
           <sourcePaths>
             <sourcePath>${project.basedir}/target/asyncapi-schema/info.json</sourcePath>
-            <sourcePath>${project.basedir}/target/asyncapi-schema/contact.json</sourcePath>
-            <sourcePath>${project.basedir}/target/asyncapi-schema/externalDocs.json</sourcePath>
-            <sourcePath>${project.basedir}/target/asyncapi-schema/license.json</sourcePath>
-            <sourcePath>${project.basedir}/target/asyncapi-schema/Reference.json</sourcePath>
-            <sourcePath>${project.basedir}/target/asyncapi-schema/specificationExtension.json</sourcePath>
-            <sourcePath>${project.basedir}/target/asyncapi-schema/tag.json</sourcePath>
           </sourcePaths>
           <targetVersion>11</targetVersion>
           <useTitleAsClassname>true</useTitleAsClassname>
+          <includeTypeInfo>true</includeTypeInfo>
+          <removeOldOutput>true</removeOldOutput>
         </configuration>
       </plugin>
     </plugins>
