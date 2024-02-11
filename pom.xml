@@ -86,134 +86,12 @@
             <version>1.8.0</version>
             <executions>
               <execution>
-                <id>asyncapi.json</id>
+                <id>asyncapi-unified</id>
                 <phase>generate-sources</phase>
-                <goals>
-                  <goal>wget</goal>
-                </goals>
+                <goals><goal>wget</goal></goals>
                 <configuration>
-                  <url>https://asyncapi.com/definitions/3.0.0/asyncapi.json</url>
-                </configuration>
-              </execution>
-              <execution>
-                <id>components.json</id>
-                <phase>generate-sources</phase>
-                <goals>
-                  <goal>wget</goal>
-                </goals>
-                <configuration>
-                  <url>https://asyncapi.com/definitions/3.0.0/components.json</url>
-                </configuration>
-              </execution>
-              <execution>
-                <id>operations.json</id>
-                <phase>generate-sources</phase>
-                <goals>
-                  <goal>wget</goal>
-                </goals>
-                <configuration>
-                  <url>https://asyncapi.com/definitions/3.0.0/operations.json</url>
-                </configuration>
-              </execution>
-              <execution>
-                <id>channels.json</id>
-                <phase>generate-sources</phase>
-                <goals>
-                  <goal>wget</goal>
-                </goals>
-                <configuration>
-                  <url>https://asyncapi.com/definitions/3.0.0/channels.json</url>
-                </configuration>
-              </execution>
-              <execution>
-                <id>servers.json</id>
-                <phase>generate-sources</phase>
-                <goals>
-                  <goal>wget</goal>
-                </goals>
-                <configuration>
-                  <url>https://asyncapi.com/definitions/3.0.0/servers.json</url>
-                </configuration>
-              </execution>
-              <execution>
-                <id>contact.json</id>
-                <phase>generate-sources</phase>
-                <goals>
-                  <goal>wget</goal>
-                </goals>
-                <configuration>
-                  <url>https://asyncapi.com/definitions/3.0.0/contact.json</url>
-                </configuration>
-              </execution>
-              <execution>
-                <id>externalDocs.json</id>
-                <phase>generate-sources</phase>
-                <goals>
-                  <goal>wget</goal>
-                </goals>
-                <configuration>
-                  <url>https://asyncapi.com/definitions/3.0.0/externalDocs.json</url>
-                </configuration>
-              </execution>
-              <execution>
-                <id>info.json</id>
-                <phase>generate-sources</phase>
-                <goals>
-                  <goal>wget</goal>
-                </goals>
-                <configuration>
-                  <url>https://asyncapi.com/definitions/3.0.0/info.json</url>
-                </configuration>
-              </execution>
-              <execution>
-                <id>license.json</id>
-                <phase>generate-sources</phase>
-                <goals>
-                  <goal>wget</goal>
-                </goals>
-                <configuration>
-                  <url>https://asyncapi.com/definitions/3.0.0/license.json</url>
-                </configuration>
-              </execution>
-              <execution>
-                <id>Reference.json</id>
-                <phase>generate-sources</phase>
-                <goals>
-                  <goal>wget</goal>
-                </goals>
-                <configuration>
-                  <url>https://asyncapi.com/definitions/3.0.0/Reference.json</url>
-                </configuration>
-              </execution>
-              <execution>
-                <id>specificationExtension.json</id>
-                <phase>generate-sources</phase>
-                <goals>
-                  <goal>wget</goal>
-                </goals>
-                <configuration>
-                  <url>https://asyncapi.com/definitions/3.0.0/specificationExtension.json</url>
-                </configuration>
-              </execution>
-              <execution>
-                <id>ReferenceObject.json</id>
-                <phase>generate-sources</phase>
-                <goals>
-                  <goal>wget</goal>
-                </goals>
-                <configuration>
-                  <outputDirectory>${project.basedir}/target/asyncapi-schema</outputDirectory>
-                  <url>https://asyncapi.com/definitions/3.0.0/ReferenceObject.json</url>
-                </configuration>
-              </execution>
-              <execution>
-                <id>tag.json</id>
-                <phase>generate-sources</phase>
-                <goals>
-                  <goal>wget</goal>
-                </goals>
-                <configuration>
-                  <url>https://asyncapi.com/definitions/3.0.0/tag.json</url>
+                  <url>https://asyncapi.com/schema-store/3.0.0-without-$id.json</url>
+                  <outputFileName>asyncapi-unified.json</outputFileName>
                 </configuration>
               </execution>
             </executions>
@@ -221,34 +99,6 @@
               <outputDirectory>${project.basedir}/target/asyncapi-schema</outputDirectory>
               <overwrite>true</overwrite>
             </configuration>
-          </plugin>
-          <plugin>
-            <groupId>com.google.code.maven-replacer-plugin</groupId>
-            <artifactId>replacer</artifactId>
-            <version>1.5.3</version>
-            <executions>
-              <execution>
-                <phase>generate-sources</phase>
-                <goals>
-                  <goal>replace</goal>
-                </goals>
-                <configuration>
-                  <includes>
-                    <include>${project.basedir}/target/asyncapi-schema/*</include>
-                  </includes>
-                  <replacements>
-                    <replacement>
-                      <token>ref": "http://asyncapi.com/definitions/3.0.0/</token>
-                      <value>ref": "file:target/asyncapi-schema/</value>
-                    </replacement>
-                    <replacement>
-                      <token>ref": "http://asyncapi.com/examples/3.0.0/</token>
-                      <value>ref": "file:target/asyncapi-schema/</value>
-                    </replacement>
-                  </replacements>
-                </configuration>
-              </execution>
-            </executions>
           </plugin>
           <plugin>
             <groupId>org.jsonschema2pojo</groupId>
@@ -272,17 +122,12 @@
                   <initializeCollections>true</initializeCollections>
                   <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
                   <targetPackage>com.asyncapi.schema</targetPackage>
+                  <includeAdditionalProperties>false</includeAdditionalProperties>
                   <serializable>true</serializable>
+                  <removeOldOutput>true</removeOldOutput>
                   <sourceDirectory>${project.basedir}/target/asyncapi-schema</sourceDirectory>
                   <sourcePaths>
-                    <sourcePath>${project.basedir}/target/asyncapi-schema/asyncapi.json</sourcePath>
-                    <!--<sourcePath>${project.basedir}/target/asyncapi-schema/info.json</sourcePath>
-                    <sourcePath>${project.basedir}/target/asyncapi-schema/contact.json</sourcePath>
-                    <sourcePath>${project.basedir}/target/asyncapi-schema/externalDocs.json</sourcePath>
-                    <sourcePath>${project.basedir}/target/asyncapi-schema/license.json</sourcePath>
-                    <sourcePath>${project.basedir}/target/asyncapi-schema/Reference.json</sourcePath>
-                    <sourcePath>${project.basedir}/target/asyncapi-schema/specificationExtension.json</sourcePath>
-                    <sourcePath>${project.basedir}/target/asyncapi-schema/tag.json</sourcePath>-->
+                    <sourcePath>${project.basedir}/target/asyncapi-schema/asyncapi-unified.json</sourcePath>
                   </sourcePaths>
                   <targetVersion>11</targetVersion>
                   <useTitleAsClassname>true</useTitleAsClassname>
